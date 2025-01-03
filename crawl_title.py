@@ -33,7 +33,7 @@ def get_titles_from_multiple_pages(base_url, num_pages):
     return all_titles
 
 # Thay link của chuyên mục cần lấy vào đây
-base_url = "https://vnexpress.net/thoi-su/chinh-tri"
+base_url = "https://vnexpress.net/the-thao/tennis"
 
 # Số trang muốn lấy dữ liệu
 num_pages = 20
@@ -49,7 +49,7 @@ output_dir = "D:\\NLP\\titles_classification\\excels"
 os.makedirs(output_dir, exist_ok=True)
 
 # Lưu DataFrame vào file Excel
-output_file = os.path.join(output_dir, "chinh_tri.xlsx")
+output_file = os.path.join(output_dir, "bong_da.xlsx")
 df.to_excel(output_file, index=False)        
 
 print(f"Tiêu đề đã được lưu vào file Excel tại: {output_file}")
