@@ -39,7 +39,7 @@ def remove_punctuation(text):
 def read_data_from_excels(data_dir):
     data = []
     data_test = []
-    data_dir = 'excels'
+    
     for categories in os.listdir(data_dir):
         file_path = os.path.join(data_dir, categories)
         print(f"Đang xử lý file: {categories}")
@@ -64,15 +64,15 @@ def read_data_from_excels(data_dir):
     return data,data_test
 
 
-stopwords = load_stopwords("vietnamese-stopwords-dash.txt")  
+stopwords = load_stopwords("D:\\NLP\\titles_classification\\vietnamese-stopwords-dash.txt")  
 
-processed_data,processed_data_test = read_data_from_excels("excels")
+processed_data,processed_data_test = read_data_from_excels("raw_data")
 
 # print(processed_data)
 
 # output_file = "preprocessed_data_updated.csv"
-output_file = "D:\\NLP\\titles_classification\\preprocessed_data_updated.csv"
-output_file_test = "D:\\NLP\\titles_classification\\preprocessed_data_test_updated.csv"
+output_file = "D:\\NLP\\titles_classification\\1.csv"
+output_file_test = "D:\\NLP\\titles_classification\\2.csv"
 try:
     # Tạo DataFrame từ dữ liệu đã xử lý
     df = pd.DataFrame(processed_data, columns=["Content", "Label"])
