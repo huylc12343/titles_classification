@@ -16,7 +16,7 @@ def load_stopwords(stopwords_file):
 def remove_punctuation(text):
     text = text.lower()
     # Loại bỏ số
-    text = re.sub(r'\d+', '', text)  # Loại bỏ tất cả các số
+    text = re.sub(r'\d+', '', text)  # Loại bỏ số
 
     # Loại bỏ ngày tháng (định dạng dd/mm/yyyy hoặc yyyy-mm-dd)
     text = re.sub(r'\b\d{1,2}[-/]\d{1,2}[-/]\d{2,4}\b', '', text)  # Loại bỏ ngày tháng dạng dd/mm/yyyy hoặc dd-mm-yyyy
@@ -29,7 +29,7 @@ def remove_punctuation(text):
 
 
     # Tách từ và loại bỏ stopwords
-    words = cleaned_text.split()  # Tách chuỗi thành các từ
+    words = cleaned_text.split()  # Tách chuỗi thành các từừ
     words = [word for word in words if word not in stopwords]  # Loại bỏ stopwords
     cleaned_text = " ".join(words)  # Ghép lại các từ thành chuỗi
 
@@ -51,7 +51,7 @@ def read_data_from_excels(data_dir):
                     df = pd.read_excel(file_path + '/' + file)
                     for text in df['Title']:
                         tokenized_text = ViTokenizer.tokenize(text)  # Tokenize văn bản
-                        new_string = tokenized_text.replace("\n", "")  # Loại bỏ dòng mới
+                        new_string = tokenized_text.replace("\n", "")  # Loại bỏ xuống dòngdòng
                         new_string = remove_punctuation(new_string)
                         if(i<=10000): 
                             data.append([new_string, categories])
@@ -66,13 +66,13 @@ def read_data_from_excels(data_dir):
 
 stopwords = load_stopwords("D:\\NLP\\titles_classification\\vietnamese-stopwords-dash.txt")  
 
-processed_data,processed_data_test = read_data_from_excels("raw_data")
+processed_data,processed_data_test = read_data_from_excels("D:\\NLP\\titles_classification\\raw_data")
 
 # print(processed_data)
 
 # output_file = "preprocessed_data_updated.csv"
-output_file = "D:\\NLP\\titles_classification\\1.csv"
-output_file_test = "D:\\NLP\\titles_classification\\2.csv"
+output_file = "D:\\NLP\\titles_classification\\data_train.csv"
+output_file_test = "D:\\NLP\\titles_classification\\data_test.csv"
 try:
     # Tạo DataFrame từ dữ liệu đã xử lý
     df = pd.DataFrame(processed_data, columns=["Content", "Label"])

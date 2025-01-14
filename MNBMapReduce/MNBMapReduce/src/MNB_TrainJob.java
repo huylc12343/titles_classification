@@ -20,32 +20,45 @@ public class MNB_TrainJob extends Configured implements Tool {
     public int run(String[] args) throws Exception {
         Configuration conf = getConf();
 
-        // Parse input and output paths from command-line arguments
+        // Kiểm tra đường dẫn input và output
         String inputPath = conf.get("input");
         String outputPath = conf.get("output");
 
-        if (inputPath == null || outputPath == null) {
-            System.err.println("Error: Input and Output paths must be provided using -Dinput=<path> -Doutput=<path>");
+        if (inputPath == null) {
+            System.err.println("Error: Input path not provided! Use -Dinput=<path>");
+            return 1;
+        }
+        if (outputPath == null) {
+            System.err.println("Error: Output path not provided! Use -Doutput=<path>");
             return 1;
         }
 
-        Job job = Job.getInstance(conf, "Training");
+
+        // Cấu hình Job
+        Job job = Job.getInstance(conf, "Multinomial Naive Bayes Training");
         job.setJarByClass(MNB_TrainJob.class);
 
-        // Set Mapper, Reducer, and Combiner classes
+        // Cấu hình Mapper và Reducer
         job.setMapperClass(MNB_TrainMapper.class);
-//        job.setCombinerClass(MNB_TrainReducer.class);
         job.setReducerClass(MNB_TrainReducer.class);
 
-        // Set output key and value types
+        // Cấu hình kiểu đầu ra
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
-        // Set input and output paths
+        // Cấu hình số mapper và reducer
+        job.getConfiguration().setInt("mapreduce.job.maps", conf.getInt("num_mappers", 4));
+        job.getConfiguration().setInt("mapreduce.job.reduces", conf.getInt("num_reducers", 1));
+//        job.setNumMapTasks(4);  // các phiên bản hadoop mới sẽ tự động phân chia số lượng map dựa theo dung lượng file đầu vào
+//        job.setNumReduceTasks(1);  // Số lượng Reduce tasks
+
+        // Cấu hình đường dẫn input và output
         FileInputFormat.addInputPath(job, new Path(inputPath));
         FileOutputFormat.setOutputPath(job, new Path(outputPath));
 
-        // Wait for job completion
+        // Chờ job hoàn thành
         return job.waitForCompletion(true) ? 0 : 1;
     }
 }
+
+

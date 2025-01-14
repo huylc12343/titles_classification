@@ -49,7 +49,7 @@ output_dir = "D:\\NLP\\titles_classification\\excels"
 os.makedirs(output_dir, exist_ok=True)
 
 # Lưu DataFrame vào file Excel
-output_file = os.path.join(output_dir, "bong_da.xlsx")
+output_file = os.path.join(output_dir, "tennis.xlsx")
 df.to_excel(output_file, index=False)        
 
 print(f"Tiêu đề đã được lưu vào file Excel tại: {output_file}")
